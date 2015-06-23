@@ -1,0 +1,37 @@
+
+Installieren: 
+
+TortoiseGit
+https://code.google.com/p/tortoisegit/
+Dort finden sich Hinweise zur Installation und welche Pakete (git binaries) zusätzlich noch gebraucht werden.
+
+
+
+Sourcecode auschecken:
+
+Am besten In euren Ordner "PycharmProjects". 
+Auf der Konsole:
+	git clone https://github.com/hashmich/SoSe2015_GIS.git
+Das zieht eure Arbeitskopie vom Server, evtl muss der Username bei GitHub noch angegeben werden.
+Etwas komfortabler geht das mit dem GUI TortoiseGit:
+Dazu Rechtsklick auf den Ordner PycharmProjects, "Git clone" auswählen und in das Dialogfenster die Repo-URL eintragen:
+	https://github.com/hashmich/SoSe2015_GIS.git
+
+
+	
+Committen:
+
+Erst eine beliebige Änderung an einer der Dateien durchführen, weiter siehe Screenshots. 
+Die Änderungen werden so in euer LOKALES Repo eingetragen.
+
+
+
+Pushen:
+
+(siehe Screenhsots)
+Bringt die Änderungen auch auf das GitHub Repo im Netz und somit dann für alle verfügbar. 
+Dabei werden dann eure Usernamen und Passwörter abgefragt. 
+Damit ihr die nicht jedesmal eingeben müsst, gibt es einen Credential-Helper, wo der Username einzutragen ist.
+Das gezeigte Dialogfenster ist zu erreichen mit Rechtsklick auf den lokalen Sourcecode Ordner -> Settings.
+Alle anderen Parameter wie gezeigt eintragen bzw. auswählen, dann "Add/Save" drücken, Ok. 
+Dann muss beim nächsten Push noch einmal das Passwort angegeben werden, danach nie wieder. 
