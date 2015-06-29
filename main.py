@@ -1,5 +1,6 @@
-__author__ = 'Stefan, Hendrik, Sven'
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
+__author__ = 'Stefan, Hendrik, Sven'
 
 
 import arcpy
@@ -19,8 +20,8 @@ fc  = "Data/e000n05f.shp"
 prjfile = "Data/WGS 1984.prj"
 arcpy.DefineProjection_management(fc, prjfile)
 
-#Felder hinzufügen, in denen Statistiken gespeichert werden sollen
-#(NUR NÖTIG, WENN FELD BERECHNEN ALS METHODE VERWENDET WIRD)
+#Felder hinzufuegen, in denen Statistiken gespeichert werden sollen
+#(NUR NoeTIG, WENN FELD BERECHNEN ALS METHODE VERWENDET WIRD)
 arcpy.AddField_management(fc, "Area", "LONG")      #Fläche
 arcpy.AddField_management(fc, "Perimeter", "LONG") #Umfang
 
