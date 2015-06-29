@@ -4,10 +4,31 @@ __author__ = 'Stefan, Hendrik, Sven'
 
 import arcpy
 from arcpy import env
+#Workpace Uni oder daheim.
+env.workspace       = "Z:/Linnarz/Transferaufgabe"
+#env.workspace       = "C:/Users/Stefan/Dropbox/Uni/GIS-Programmierung/Transferaufgabe"
+env.overwriteOutput = True
 
 
+#Input festlegen
+fc  = "Data/e000n05f.shp"
 
-print 'Wenn ich groß bin, werde ich ein Monster-Programm!'
+#Koordinatensystem festlegen
+prjfile = "Data/WGS 1984.prj"
+arcpy.DefineProjection_management(fc, prjfile)
+
+#Felder hinzufügen, in denen Statistiken gespeichert werden sollen
+#(NUR NÖTIG, WENN FELD BERECHNEN ALS METHODE VERWENDET WIRD)
+arcpy.AddField_management(fc, "Area", "LONG")      #Fläche
+arcpy.AddField_management(fc, "Perimeter", "LONG") #Umfang
 
 
-Hallo Test
+#Statistiken berechnen
+
+#Mit Calculate Areas Tool
+#arcpy.CalculateAreas_stats(fc, "Results/test.shp")
+
+#Mit Feld berechnen. Fügt der bestehenden Datei in Tabellenfeld Werte hinzu
+update = arcpy.da.UpdateCursor(fc, ["Area"])
+for row in update:
+    arcpy.CalculateField_management(fc, "Area", "!shape.area@SQUAREMETERS!")
