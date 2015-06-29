@@ -1,5 +1,6 @@
-__author__ = 'slinnarz'
-# -*- coding: utf8 -*
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+__author__ = 'Stefan, Hendrik, Sven'
 
 
 import arcpy
