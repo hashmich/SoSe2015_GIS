@@ -4,9 +4,10 @@ __author__ = 'Stefan, Hendrik, Sven'
 
 import arcpy
 from arcpy import env
+
 #Workpace Uni oder daheim.
-env.workspace       = "Z:/Linnarz/Transferaufgabe"
-#env.workspace       = "C:/Users/Stefan/Dropbox/Uni/GIS-Programmierung/Transferaufgabe"
+import config
+
 env.overwriteOutput = True
 
 
