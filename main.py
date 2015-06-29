@@ -7,6 +7,7 @@ from arcpy import env
 
 #Workpace Uni oder daheim.
 import config
+env.workspace = config.workspace
 
 env.overwriteOutput = True
 
