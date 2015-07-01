@@ -13,9 +13,13 @@ env.overwriteOutput = True
 
 
 #Input festlegen
-fc = arcpy.GetParameterAsText(0)
+fc_in = arcpy.GetParameterAsText(0)
 #fc   = "Data/e144s26a.shp"      #muss in fc_in umbenannt werden, falls Umprojektion von WGS84 in anderes Koordinatensystem erfolgt
-#fc  = "Results/fc_out.shp"     #wird benötigt, falls Umprojektion von WGS84 in anderes Koordinatensystem erfolgt
+#fc   = "Results/fc_out.shp"     #wird benötigt, falls Umprojektion von WGS84 in anderes Koordinatensystem erfolgt
+
+#Datei in gewünschten Ordner kopieren
+fc_out  = arcpy.GetParameterAsText(1)
+fc      = arcpy.CopyFeatures_management(fc_in, fc_out)
 
 #Koordinatensystem festlegen
 prjfile = "Data/WGS 1984.prj"
