@@ -13,7 +13,8 @@ env.overwriteOutput = True
 
 
 #Input festlegen
-fc   = "Data/e144s26a.shp"      #muss in fc_in umbenannt werden, falls Umprojektion von WGS84 in anderes Koordinatensystem erfolgt
+fc = arcpy.GetParameterAsText(0)
+#fc   = "Data/e144s26a.shp"      #muss in fc_in umbenannt werden, falls Umprojektion von WGS84 in anderes Koordinatensystem erfolgt
 #fc  = "Results/fc_out.shp"     #wird benötigt, falls Umprojektion von WGS84 in anderes Koordinatensystem erfolgt
 
 #Koordinatensystem festlegen
