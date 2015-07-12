@@ -7,6 +7,7 @@ import arcpy
 from arcpy import env
 import os
 env.workspace = os.getcwd()
+env.scratchWorkspace = env.workspace
 env.overwriteOutput = True
 
 
