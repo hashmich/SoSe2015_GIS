@@ -119,4 +119,4 @@ for row in search:
           "km , Type "+FACC_C[row.FACC_CODE]+\
           ", incomplete "+str(row.Incomplete)+"."
 if fc_out_csv_name != '':
-    fc_out_csv_name.close()
+    fc_out_csv.close()
