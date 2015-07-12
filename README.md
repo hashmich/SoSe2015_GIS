@@ -3,6 +3,9 @@ Transfer exercise in ArgGIS-Python programming:
 ## Waterbody Statistics
 ### (Polygon Statistics)
 
+### Presentation on Prezi.com
+http://prezi.com/cto12a3w6tro/?utm_campaign=share&utm_medium=copy
+
 #### Operating Instructions
 1. Download the sourcecode.
 2. Fire up ArcGIS and point your homefolder to the root of the downloaded source.
