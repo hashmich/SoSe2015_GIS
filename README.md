@@ -11,6 +11,7 @@ http://prezi.com/cto12a3w6tro/?utm_campaign=share&utm_medium=copy
 2. Fire up ArcGIS and point your homefolder to the root of the downloaded source.
 3. Despite having some default input and output parameters set, the tool requires absolute pathes!
 So please browse to the test data & output folders and select the according files / type in the output filenames (those must not be preexisting!) as the default settings indicate. 
+4. Add the folder "Results" to the source root if required. 
 
 #### Input
 The script currently is designed to take input featureclasses as provided here:
