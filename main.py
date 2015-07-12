@@ -21,12 +21,9 @@ def touchesClassBoundary(feature, classExtent):
     return False
 
 
-#Input festlegen
+#Input und Output festlegen
 fc_in = arcpy.GetParameterAsText(0)
-##fc_in   = "Data/e000n05f.shp"      #muss in fc_in umbenannt werden, falls Umprojektion von WGS84 in anderes Koordinatensystem erfolgt
-##fc_out   = "Results/fc_out.shp"     #wird benötigt, falls Umprojektion von WGS84 in anderes Koordinatensystem erfolgt
 fc_out  = arcpy.GetParameterAsText(1)
-###fc_out_csv = open("E:/Studium neu/Studium/GIS-Programmierung/Projekt/Results/Gewaesser.csv", "w+")
 fc_out_csv_name = arcpy.GetParameterAsText(2)
 
 tmp_fc_name = os.path.join(env.workspace, 'Results/fc_in_wgs84.shp')
