@@ -6,7 +6,8 @@ __author__ = 'Stefan, Hendrik, Sven'
 import arcpy
 from arcpy import env
 import os
-env.workspace = os.path.dirname(os.path.realpath(__file__))   # os.getCwd() returns the wrong path when ran under ArcGIS
+# os.getCwd() returns the wrong path when running in ArcGIS
+env.workspace = os.path.dirname(os.path.realpath(__file__))
 env.scratchWorkspace = env.workspace
 env.overwriteOutput = True
 
