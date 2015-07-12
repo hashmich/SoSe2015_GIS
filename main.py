@@ -6,20 +6,19 @@ __author__ = 'Stefan, Hendrik, Sven'
 import arcpy
 from arcpy import env
 import os
-env.workspace = os.getcwd()
+env.workspace = os.path.dirname(os.path.realpath(__file__))   # os.getCwd() returns the wrong path when ran under ArcGIS
 env.scratchWorkspace = env.workspace
 env.overwriteOutput = True
 
 
 def touchesClassBoundary(feature, classExtent):
-    result = False
     featureExtent = feature.extent
     if(   featureExtent.XMin <= classExtent.XMin
        or featureExtent.XMax >= classExtent.XMax
        or featureExtent.YMin <= classExtent.YMin
        or featureExtent.YMax >= classExtent.YMax):
-        result = True
-    return result
+        return True
+    return False
 
 
 #Input festlegen
