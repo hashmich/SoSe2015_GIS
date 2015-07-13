@@ -21,9 +21,11 @@ fc_out  = arcpy.GetParameterAsText(1)
 fc_out_csv_name = arcpy.GetParameterAsText(2)
 
 #Nutzung eines Temporären Files im Arbeitsspeicher // Mergen
-tmp_fc_name = 'in_memory/fc_in'
+tmp_fc_name = 'in_memory/tmp7'
+tmp_fc_name2 = 'in_memory/tmp6'
 if len(fc_in1) > 1:
-    fc_in = arcpy.Merge_management(fc_in1, tmp_fc_name)
+    arcpy.Merge_management(fc_in1, tmp_fc_name)
+    fc_in = arcpy.Dissolve_management(tmp_fc_name,tmp_fc_name2,"FACC_Code", "","SINGLE_PART")
 else:
     arcpy.CopyFeatures_management(fc_in1, tmp_fc_name)
     fc_in = tmp_fc_name
@@ -42,7 +44,7 @@ if(sr.type == 'Geographic'):
     sr = arcpy.SpatialReference("Azimuthal Equidistant (world)")
     arcpy.Project_management(fc_in, fc_out, sr)
 
-arcpy.Delete_management(fc_in)
+arcpy.Delete_management("in_memory")
 
 # retieving the featureClass' extent
 dsc = arcpy.Describe(fc_out)
@@ -111,12 +113,12 @@ for row in search:
                                             FACC_C[row.FACC_CODE],
                                             row.Incomplete)
                      )
-    print "Waterbody "+str(row.FID)+\
-          ", water_expanse "+str(round(row.water_expa,3))+\
-          "km^2, total_area "+str(round(row.total_area,3))+\
-          "km^2, CoastLength "+str(round(row.coast_line,3))+\
-          "km, Perimeter "+str(round(row.Perimeter,3))+\
-          "km , Type "+FACC_C[row.FACC_CODE]+\
-          ", incomplete "+str(row.Incomplete)+"."
+    # print "Waterbody "+str(row.FID)+\
+    #       ", water_expanse "+str(round(row.water_expa,3))+\
+    #       "km^2, total_area "+str(round(row.total_area,3))+\
+    #       "km^2, CoastLength "+str(round(row.coast_line,3))+\
+    #       "km, Perimeter "+str(round(row.Perimeter,3))+\
+    #       "km , Type "+FACC_C[row.FACC_CODE]+\
+    #       ", incomplete "+str(row.Incomplete)+"."
 if fc_out_csv_name != '':
     fc_out_csv.close()
