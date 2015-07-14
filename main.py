@@ -4,6 +4,7 @@ __author__ = 'Stefan, Hendrik, Sven'
 
 import arcpy
 
+# define function that is used later to check, if polygon reaches extent of tile
 def touchesClassBoundary(feature, classExtent):
     result = False
     featureExtent = feature.extent
@@ -15,14 +16,19 @@ def touchesClassBoundary(feature, classExtent):
     return result
 
 
-#Input und Output festlegen
+# set input and output
 fc_in1 = arcpy.GetParameterAsText(0)
 fc_out  = arcpy.GetParameterAsText(1)
 fc_out_csv_name = arcpy.GetParameterAsText(2)
 
-#Nutzung eines Temporären Files im Arbeitsspeicher // Mergen
+
+### 1) preparing input data for statistic calculation ###
+
+# define temporary file used for merging
 tmp_fc_name = 'in_memory/tmp7'
 tmp_fc_name2 = 'in_memory/tmp6'
+
+# merge polygons
 if len(fc_in1) > 1:
     arcpy.Merge_management(fc_in1, tmp_fc_name)
     fc_in = arcpy.Dissolve_management(tmp_fc_name,tmp_fc_name2,"FACC_Code", "","SINGLE_PART")
@@ -50,15 +56,17 @@ arcpy.Delete_management("in_memory")
 dsc = arcpy.Describe(fc_out)
 fc_extent = dsc.extent
 
-#Felder hinzufügen, in denen Statistiken gespeichert werden sollen
+# add columns in which calculated statistics will be stored
 # alternative: Polygon(arcpy).getArea('GEODESIC', 'SQUAREKILOMETERS ') - just returns the value (use cursor)
-arcpy.AddField_management(fc_out, "water_expa", "DOUBLE")         # area takes into account inner polygon-rings (islands are substracted from the overall area)
-arcpy.AddField_management(fc_out, "total_area", "DOUBLE")
-arcpy.AddField_management(fc_out, "Perimeter", "DOUBLE")    # outer perimeter
-arcpy.AddField_management(fc_out, "coast_line", "DOUBLE")    # coast length including all inner polygon rings
-arcpy.AddField_management(fc_out, 'Incomplete', 'SHORT', 1)    # if the shape touches the featureclass' outer boundary and might be incomplete
+arcpy.AddField_management(fc_out, "water_expa", "DOUBLE")       # area takes into account inner polygon-rings (islands are substracted from the overall area)
+arcpy.AddField_management(fc_out, "total_area", "DOUBLE")       # total water body area
+arcpy.AddField_management(fc_out, "Perimeter", "DOUBLE")        # outer perimeter
+arcpy.AddField_management(fc_out, "coast_line", "DOUBLE")       # coast length including all inner polygon rings
+arcpy.AddField_management(fc_out, 'Incomplete', 'SHORT', 1)     # if the shape touches the featureclass' outer boundary and might be incomplete
 
-#Statistiken berechnen
+
+### 2) calculation of water body statistics ###
+
 # CalculateField_management stores value on the just created fields
 # a loop is not needed here, the CalculateField_management() method iterates over all features on it's own
 arcpy.CalculateField_management(fc_out, "water_expa", "!shape.geodesicArea@SQUAREKILOMETERS!", "PYTHON_9.3", "#")
@@ -96,13 +104,17 @@ del row
 del rows
 
 
-#Statistiken ausgeben
-search  = arcpy.SearchCursor(fc_out)
+### 3) create output ###
+
+# create dictionary to assign FACC codes with water body type
 FACC_C = {"BA040" : "sea", "BH080" : "lake", "BH140" : "river"}
 
+# if input name for table output isn't empty, open file to store statistics as table
 if fc_out_csv_name != '':
     fc_out_csv = open(fc_out_csv_name, 'w')
     fc_out_csv.write("Water Body_ID;water_expanse[km^2];total_area[km^2];coast_line[km];Perimeter[km];Type;Incompletness\n")
+# store statistics in table file
+search  = arcpy.SearchCursor(fc_out)
 for row in search:
     if fc_out_csv_name != '':
         fc_out_csv.write("%s;%s;%s;%s;%s;%s;%s\n" % (row.FID,
@@ -113,12 +125,7 @@ for row in search:
                                             FACC_C[row.FACC_CODE],
                                             row.Incomplete)
                      )
-    # print "Waterbody "+str(row.FID)+\
-    #       ", water_expanse "+str(round(row.water_expa,3))+\
-    #       "km^2, total_area "+str(round(row.total_area,3))+\
-    #       "km^2, CoastLength "+str(round(row.coast_line,3))+\
-    #       "km, Perimeter "+str(round(row.Perimeter,3))+\
-    #       "km , Type "+FACC_C[row.FACC_CODE]+\
-    #       ", incomplete "+str(row.Incomplete)+"."
+
+# close table file
 if fc_out_csv_name != '':
     fc_out_csv.close()
