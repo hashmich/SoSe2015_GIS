@@ -25,5 +25,5 @@ For proper calculation of geodesic areas, the input file has to be in a *project
 
 #### Output
 Rather self-explanatory. 
-Have a look at the Field "Incomplete" (output featureclass) or "Randlage" (out.csv):
+Have a look at the Field "Incomplete" in the output featureclass):
 This one tells, if the polygon touches the tile's extent rectangle - and *possibly* is only part of a larger waterbody. You will have to examine the neighbouring tiles to check, whether the waterbody is extending into them and merge/dissolve them into a larger featureclass. 
