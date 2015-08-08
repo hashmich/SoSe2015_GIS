@@ -29,13 +29,15 @@ tmp_fc_name = 'in_memory/tmp7'
 tmp_fc_name2 = 'in_memory/tmp6'
 
 # merge polygons
-if len(fc_in1) > 1:
-    arcpy.Merge_management(fc_in1, tmp_fc_name)
-    fc_in = arcpy.Dissolve_management(tmp_fc_name,tmp_fc_name2,"FACC_Code", "","SINGLE_PART")
-else:
-    arcpy.CopyFeatures_management(fc_in1, tmp_fc_name)
-    fc_in = tmp_fc_name
-
+try:
+    if len(fc_in1) > 1:
+        arcpy.Merge_management(fc_in1, tmp_fc_name)
+        fc_in = arcpy.Dissolve_management(tmp_fc_name,tmp_fc_name2,"FACC_Code", "","SINGLE_PART")
+    else:
+        arcpy.CopyFeatures_management(fc_in1, tmp_fc_name)
+        fc_in = tmp_fc_name
+except:
+    arcpy.Delete_management("in_memory")
 # check if input featureclass has any spatial reference system set. Assume WGS 84 otherwise
 sr = arcpy.Describe(fc_in).spatialReference
 if(sr.type == 'Unknown'):
